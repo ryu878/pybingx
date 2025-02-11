@@ -9,6 +9,7 @@ A Python client for the BingX cryptocurrency exchange API. This package allows d
 - Retrieve recent trades
 - Fetch historical klines (candlestick data)
 - Fetch open interest statistics
+- Get 24hr ticker price change
 - Easy-to-use and extend
 - Built-in HMAC signature generation for secure API requests
 
@@ -68,6 +69,14 @@ print("Klines:", klines)
 open_interest = client.get_open_interest("EOS-USDT")
 print("Open Interest:", open_interest)
 
+# Fetch 24hr ticker price change for a specific symbol
+ticker_price_change = client.get_24hr_ticker_price_change("SFP-USDT")
+print("24hr Ticker Price Change (SFP-USDT):", ticker_price_change)
+
+# Fetch 24hr ticker price change for all symbols
+all_ticker_price_changes = client.get_24hr_ticker_price_change()
+print("24hr Ticker Price Change (All Symbols):", all_ticker_price_changes)
+
 ```
 
 ## Project Structure
@@ -122,6 +131,11 @@ Fetch historical klines (candlestick data) for a specific trading pair.
 Fetch open interest statistics for a specific trading pair.
 
     symbol: The trading pair symbol (e.g., "EOS-USDT").
+
+### `get_24hr_ticker_price_change(symbol: str = None)`
+Fetch 24-hour ticker price change statistics for a specific trading pair or all pairs if no symbol is provided.
+    
+    symbol: The trading pair symbol (e.g., "SFP-USDT"). If not provided, returns data for all trading pairs.
 
 
 ## Contributing

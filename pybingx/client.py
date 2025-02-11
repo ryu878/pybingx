@@ -83,10 +83,18 @@ class BingXClient:
             params["startTime"] = start_time
         return self._send_request("GET", path, params)
 
-    
+
     def get_open_interest(self, symbol: str) -> dict:
         path = '/openApi/swap/v2/quote/openInterest'
         params = {
             "symbol": symbol
         }
+        return self._send_request("GET", path, params)
+    
+    
+    def get_24hr_ticker_price_change(self, symbol: str = None) -> dict:
+        path = '/openApi/swap/v2/quote/ticker'
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
         return self._send_request("GET", path, params)
