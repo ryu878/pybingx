@@ -10,6 +10,8 @@ A Python client for the BingX cryptocurrency exchange API. This package allows d
 - Fetch historical klines (candlestick data)
 - Fetch open interest statistics
 - Get 24hr ticker price change
+- Get asset information of user‘s Perpetual Account of USDC and USDT
+- Retrieve information on users' positions of Perpetual Swap
 - Easy-to-use and extend
 - Built-in HMAC signature generation for secure API requests
 
@@ -108,6 +110,10 @@ print("Positions:", positions)
 # Fetch positions for all symbols
 all_positions = client.get_positions()
 print("All Positions:", all_positions)
+
+# Fetch profit and loss fund flow with a time range
+profit_loss_flow = client.get_account_profit_loss_flow(start_time=1702713615001, end_time=1702731787011, limit=1000)
+print("Profit and Loss Fund Flow:", profit_loss_flow)
 ```
 
 ## Project Structure
@@ -202,6 +208,13 @@ Fetch position data for a specific trading pair or all pairs if no symbol is pro
 
     symbol: The trading pair symbol (e.g., "BNB-USDT"). If not provided, returns positions for all trading pairs.
     recv_window: The receive window for the request (optional).
+
+### `get_account_profit_loss_flow(start_time: int = None, end_time: int = None, limit: int = 1000)`
+Fetch the profit and loss fund flow for the perpetual contract under the current account.
+
+    start_time: The start time for the query in milliseconds (optional).
+    end_time: The end time for the query in milliseconds (optional).
+    limit: The maximum number of records to retrieve (default is 1000).
 
 ## Contributing
 

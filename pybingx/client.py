@@ -153,7 +153,7 @@ class BingXClient:
         params = {}
         return self._send_request("GET", path, params)
 
-  
+
     def get_positions(self, symbol: str = None, recv_window: int = None) -> dict:
         path = '/openApi/swap/v2/user/positions'
         params = {}
@@ -161,6 +161,18 @@ class BingXClient:
             params["symbol"] = symbol
         if recv_window:
             params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params)
+
+
+    def get_account_profit_loss_flow(self, start_time: int = None, end_time: int = None, limit: int = 1000) -> dict:
+        path = '/openApi/swap/v2/user/income'
+        params = {
+            "limit": limit
+        }
+        if start_time:
+            params["startTime"] = start_time
+        if end_time:
+            params["endTime"] = end_time
         return self._send_request("GET", path, params)
     
     
