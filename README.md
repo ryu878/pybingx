@@ -100,6 +100,14 @@ print("All Symbol Price Tickers:", all_price_tickers)
 # Fetch user balance
 user_balance = client.get_user_balance()
 print("User Balance:", user_balance)
+
+# Fetch positions for a specific symbol
+positions = client.get_positions(symbol="BNB-USDT")
+print("Positions:", positions)
+
+# Fetch positions for all symbols
+all_positions = client.get_positions()
+print("All Positions:", all_positions)
 ```
 
 ## Project Structure
@@ -189,6 +197,11 @@ Fetch the price ticker for a specific trading pair or all pairs if no symbol is 
 ### `get_user_balance()`
 Fetch the user's balance.
 
+### `get_positions(symbol: str = None, recv_window: int = None)`
+Fetch position data for a specific trading pair or all pairs if no symbol is provided.
+
+    symbol: The trading pair symbol (e.g., "BNB-USDT"). If not provided, returns positions for all trading pairs.
+    recv_window: The receive window for the request (optional).
 
 ## Contributing
 

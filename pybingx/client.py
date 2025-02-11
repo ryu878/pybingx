@@ -152,6 +152,16 @@ class BingXClient:
         path = '/openApi/swap/v3/user/balance'
         params = {}
         return self._send_request("GET", path, params)
+
+  
+    def get_positions(self, symbol: str = None, recv_window: int = None) -> dict:
+        path = '/openApi/swap/v2/user/positions'
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params)
     
     
     def _send_request(self, method: str, path: str, params: dict):
