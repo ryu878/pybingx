@@ -77,6 +77,10 @@ print("24hr Ticker Price Change (SFP-USDT):", ticker_price_change)
 all_ticker_price_changes = client.get_24hr_ticker_price_change()
 print("24hr Ticker Price Change (All Symbols):", all_ticker_price_changes)
 
+# Fetch historical trades for a specific symbol
+historical_trades = client.get_historical_trades("ETH-USDT", from_id="412551", limit=500)
+print("Historical Trades:", historical_trades)
+
 ```
 
 ## Project Structure
@@ -137,6 +141,13 @@ Fetch 24-hour ticker price change statistics for a specific trading pair or all 
     
     symbol: The trading pair symbol (e.g., "SFP-USDT"). If not provided, returns data for all trading pairs.
 
+### `get_historical_trades(symbol: str, from_id: str = None, limit: int = 500, recv_window: int = None)`
+Fetch historical transaction orders for a specific trading pair.
+
+    symbol: The trading pair symbol (e.g., "ETH-USDT").
+    from_id: The trade ID to start fetching historical trades from (optional).
+    limit: The maximum number of trades to retrieve (default is 500).
+    recv_window: The receive window for the request (optional).
 
 ## Contributing
 

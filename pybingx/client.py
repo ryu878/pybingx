@@ -91,10 +91,24 @@ class BingXClient:
         }
         return self._send_request("GET", path, params)
     
-    
+
     def get_24hr_ticker_price_change(self, symbol: str = None) -> dict:
         path = '/openApi/swap/v2/quote/ticker'
         params = {}
         if symbol:
             params["symbol"] = symbol
         return self._send_request("GET", path, params)
+
+ 
+    def get_historical_trades(self, symbol: str, from_id: str = None, limit: int = 500, recv_window: int = None) -> dict:
+        path = '/openApi/swap/v1/market/historicalTrades'
+        params = {
+            "symbol": symbol,
+            "limit": limit
+        }
+        if from_id:
+            params["fromId"] = from_id
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params)
+
