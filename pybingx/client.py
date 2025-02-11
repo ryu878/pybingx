@@ -112,11 +112,24 @@ class BingXClient:
             params["recvWindow"] = recv_window
         return self._send_request("GET", path, params)
 
-   
+
     def get_symbol_order_book_ticker(self, symbol: str) -> dict:
         path = '/openApi/swap/v2/quote/bookTicker'
         params = {
             "symbol": symbol
         }
         return self._send_request("GET", path, params)
+    
+
+    def get_mark_price_klines(self, symbol: str, interval: str, limit: int = 1000, start_time: int = None) -> dict:
+        path = '/openApi/swap/v1/market/markPriceKlines'
+        params = {
+            "symbol": symbol,
+            "interval": interval,
+            "limit": limit
+        }
+        if start_time:
+            params["startTime"] = start_time
+        return self._send_request("GET", path, params)
+
 

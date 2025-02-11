@@ -84,6 +84,10 @@ print("Historical Trades:", historical_trades)
 # Fetch order book ticker for a specific symbol
 order_book_ticker = client.get_symbol_order_book_ticker("BTC-USDT")
 print("Order Book Ticker:", order_book_ticker)
+
+# Fetch mark price klines for a specific symbol and interval
+mark_price_klines = client.get_mark_price_klines("KNC-USDT", interval="1h", limit=1000, start_time=1702717199998)
+print("Mark Price Klines:", mark_price_klines)
 ```
 
 ## Project Structure
@@ -156,6 +160,14 @@ Fetch historical transaction orders for a specific trading pair.
 Fetch the order book ticker for a specific trading pair.
 
     symbol: The trading pair symbol (e.g., "BTC-USDT").
+
+### `get_mark_price_klines(symbol: str, interval: str, limit: int = 1000, start_time: int = None)`
+Fetch mark price kline/candlestick data for a specific trading pair and interval.
+
+    symbol: The trading pair symbol (e.g., "KNC-USDT").
+    interval: The interval of the klines (e.g., "1h", "4h", "1d").
+    limit: The maximum number of klines to retrieve (default is 1000).
+    start_time: The start time for the klines in milliseconds (optional, e.g. 1702717199998).
 
 ## Contributing
 
