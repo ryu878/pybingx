@@ -52,10 +52,11 @@ print("Recent Trades:", trades_info)
 premium_index = client.get_premium_index("BTC-USDT")
 print("Premium Index:", premium_index)
 
-# Fetch funding rates
-funding_rate = client.get_funding_rate("QNT-USDT", limit=2)
-print("Funding Rate:", funding_rate)
-
+# Fetch funding rate history with time range
+start_time = 1672531200000  # Example timestamp in milliseconds
+end_time = 1672617600000    # Example timestamp in milliseconds
+funding_rate_history = client.get_funding_rate_history("BTC-USDT", start_time=start_time, end_time=end_time, limit=5)
+print("Funding Rate History:", funding_rate_history)
 ```
 
 ## Project Structure
@@ -88,8 +89,13 @@ Retrieve the most recent trades for a given trading pair.
 ### `get_premium_index(symbol: str)`
 Fetch the premium index for a specific trading pair.
 
-### `get_funding_rate(symbol: str, limit: int)`
-Retrieve the funding rates for a specific trading pair.
+### `get_funding_rate_history(symbol: str, start_time: int, end_time: int, limit: int)`
+Retrieve the funding rate history for a specific trading pair within a time range.
+
+- If both `start_time` and `end_time` are not sent, the API returns the latest data within the `limit`.
+- The returned list is sorted by time from smallest to largest.
+- If the amount of data between `start_time` and `end_time` exceeds the `limit`, the API returns the data from `start_time` up to the `limit`.
+
 
 ## Contributing
 
