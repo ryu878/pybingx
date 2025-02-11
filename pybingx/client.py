@@ -189,7 +189,15 @@ class BingXClient:
         if recv_window:
             params["recvWindow"] = recv_window
         return self._send_request("GET", path, params, return_binary=True)
-    
+
+
+    def get_trading_commission_rate(self, recv_window: int = None) -> dict:
+        path = '/openApi/swap/v2/user/commissionRate'
+        params = {}
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params)
+
     
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
         params_str = self._parse_params(params)

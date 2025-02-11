@@ -124,6 +124,10 @@ with open("fund_flow.xlsx", "wb") as file:
     file.write(fund_flow_data)
 print("Fund flow data exported to fund_flow.xlsx")
 
+# Fetch trading commission rate
+commission_rate = client.get_trading_commission_rate(recv_window=5000)
+print("Trading Commission Rate:", commission_rate)
+
 ```
 
 ## Project Structure
@@ -235,7 +239,11 @@ Export the fund flow data as an Excel file, keeping only the last 3 months of da
     limit: The maximum number of records to retrieve (default is 200).
     recv_window: The receive window for the request (optional).
 
+### `get_trading_commission_rate(recv_window: int = None)`
+Fetch the trading commission rate for the current user.
 
+    recv_window: The receive window for the request (optional).
+    
 ## Contributing
 
 Feel free to submit issues or pull requests if you'd like to improve this package.
