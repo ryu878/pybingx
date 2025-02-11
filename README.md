@@ -81,6 +81,9 @@ print("24hr Ticker Price Change (All Symbols):", all_ticker_price_changes)
 historical_trades = client.get_historical_trades("ETH-USDT", from_id="412551", limit=500)
 print("Historical Trades:", historical_trades)
 
+# Fetch order book ticker for a specific symbol
+order_book_ticker = client.get_symbol_order_book_ticker("BTC-USDT")
+print("Order Book Ticker:", order_book_ticker)
 ```
 
 ## Project Structure
@@ -148,6 +151,11 @@ Fetch historical transaction orders for a specific trading pair.
     from_id: The trade ID to start fetching historical trades from (optional).
     limit: The maximum number of trades to retrieve (default is 500).
     recv_window: The receive window for the request (optional).
+
+### `get_symbol_order_book_ticker(symbol: str)`
+Fetch the order book ticker for a specific trading pair.
+
+    symbol: The trading pair symbol (e.g., "BTC-USDT").
 
 ## Contributing
 

@@ -112,3 +112,11 @@ class BingXClient:
             params["recvWindow"] = recv_window
         return self._send_request("GET", path, params)
 
+   
+    def get_symbol_order_book_ticker(self, symbol: str) -> dict:
+        path = '/openApi/swap/v2/quote/bookTicker'
+        params = {
+            "symbol": symbol
+        }
+        return self._send_request("GET", path, params)
+
