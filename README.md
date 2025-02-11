@@ -7,6 +7,7 @@ A Python client for the BingX cryptocurrency exchange API. This package allows d
 - Fetch market contract details
 - Get order book depth information
 - Retrieve recent trades
+- Fetch historical klines (candlestick data)
 - Easy-to-use and extend
 - Built-in HMAC signature generation for secure API requests
 
@@ -57,6 +58,11 @@ start_time = 1672531200000  # Example timestamp in milliseconds
 end_time = 1672617600000    # Example timestamp in milliseconds
 funding_rate_history = client.get_funding_rate_history("BTC-USDT", start_time=start_time, end_time=end_time, limit=5)
 print("Funding Rate History:", funding_rate_history)
+
+# Fetch historical klines (candlestick data)
+klines = client.get_klines("BTC-USDT", interval="1h", limit=1000, start_time=1672531200000)
+print("Klines:", klines)
+
 ```
 
 ## Project Structure
@@ -95,6 +101,17 @@ Retrieve the funding rate history for a specific trading pair within a time rang
 - If both `start_time` and `end_time` are not sent, the API returns the latest data within the `limit`.
 - The returned list is sorted by time from smallest to largest.
 - If the amount of data between `start_time` and `end_time` exceeds the `limit`, the API returns the data from `start_time` up to the `limit`.
+
+### `get_klines(symbol: str, interval: str, limit: int, start_time: int)`
+Fetch historical klines (candlestick data) for a specific trading pair.
+
+    symbol: The trading pair symbol (e.g., "BTC-USDT").
+
+    interval: The interval of the klines (e.g., "1h", "4h", "1d").
+
+    limit: The maximum number of klines to retrieve (default is 1000).
+
+    start_time: The start time for the klines in milliseconds (optional).
 
 
 ## Contributing
