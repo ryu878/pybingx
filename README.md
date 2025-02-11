@@ -97,6 +97,9 @@ print("Symbol Price Ticker:", price_ticker)
 all_price_tickers = client.get_symbol_price_ticker()
 print("All Symbol Price Tickers:", all_price_tickers)
 
+# Fetch user balance
+user_balance = client.get_user_balance()
+print("User Balance:", user_balance)
 ```
 
 ## Project Structure
@@ -182,6 +185,9 @@ Fetch mark price kline/candlestick data for a specific trading pair and interval
 Fetch the price ticker for a specific trading pair or all pairs if no symbol is provided.
 
     symbol: The trading pair symbol (e.g., "TIA-USDT"). If not provided, returns price tickers for all trading pairs.
+
+### `get_user_balance()`
+Fetch the user's balance.
 
 
 ## Contributing

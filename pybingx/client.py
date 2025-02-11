@@ -2,6 +2,7 @@ import time
 import requests
 import hmac
 from hashlib import sha256
+from utils import generate_signature, get_timestamp
 
 
 
@@ -139,3 +140,27 @@ class BingXClient:
         if symbol:
             params["symbol"] = symbol
         return self._send_request("GET", path, params)
+    
+    
+    def get_user_balance(self) -> dict:
+        path = '/openApi/swap/v3/user/balance'
+        params = {}
+        return self._send_request("GET", path, params)
+
+
+    def _send_request(self, method: str, path: str, params: dict):
+        params_str = self._parse_params(params)
+        signature = generate_signature(self.secret_key, params_str)
+        url = f"{self.API_URL}{path}?{params_str}&signature={signature}"
+        headers = {
+            'X-BX-APIKEY': self.api_key,
+        }
+        response = requests.request(method, url, headers=headers)
+        return response.json()
+
+
+    def _parse_params(self, params: dict) -> str:
+        sorted_keys = sorted(params)
+        params_str = "&".join([f"{key}={params[key]}" for key in sorted_keys])
+        timestamp = f"timestamp={get_timestamp()}"
+        return f"{params_str}&{timestamp}" if params_str else timestamp
