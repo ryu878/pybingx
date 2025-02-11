@@ -174,9 +174,24 @@ class BingXClient:
         if end_time:
             params["endTime"] = end_time
         return self._send_request("GET", path, params)
+
+  
+    def export_fund_flow(self, symbol: str, start_time: int = None, end_time: int = None, limit: int = 200, recv_window: int = None) -> bytes:
+        path = '/openApi/swap/v2/user/income/export'
+        params = {
+            "symbol": symbol,
+            "limit": limit
+        }
+        if start_time:
+            params["startTime"] = start_time
+        if end_time:
+            params["endTime"] = end_time
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params, return_binary=True)
     
     
-    def _send_request(self, method: str, path: str, params: dict):
+    def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
         params_str = self._parse_params(params)
         signature = generate_signature(self.secret_key, params_str)
         url = f"{self.API_URL}{path}?{params_str}&signature={signature}"
@@ -184,8 +199,9 @@ class BingXClient:
             'X-BX-APIKEY': self.api_key,
         }
         response = requests.request(method, url, headers=headers)
+        if return_binary:
+            return response.content  # Return binary content for file downloads
         return response.json()
-
 
     def _parse_params(self, params: dict) -> str:
         sorted_keys = sorted(params)
