@@ -47,6 +47,10 @@ print("Depth Info:", depth_info)
 # Fetch recent trades
 trades_info = client.get_trades("BTC-USDT", limit=10)
 print("Recent Trades:", trades_info)
+
+# Fetch premium index
+premium_index = client.get_premium_index("BTC-USDT")
+print("Premium Index:", premium_index)
 ```
 
 ## Project Structure
@@ -75,6 +79,9 @@ Fetch order book depth information for the specified trading pair.
 
 ### `get_trades(symbol: str, limit: int)`
 Retrieve the most recent trades for a given trading pair.
+
+### `get_premium_index(symbol: str)`
+Fetch the premium index for a specific trading pair.
 
 ## Contributing
 
