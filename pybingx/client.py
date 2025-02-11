@@ -82,3 +82,11 @@ class BingXClient:
         if start_time:
             params["startTime"] = start_time
         return self._send_request("GET", path, params)
+
+    
+    def get_open_interest(self, symbol: str) -> dict:
+        path = '/openApi/swap/v2/quote/openInterest'
+        params = {
+            "symbol": symbol
+        }
+        return self._send_request("GET", path, params)

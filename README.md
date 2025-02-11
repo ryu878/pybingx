@@ -8,6 +8,7 @@ A Python client for the BingX cryptocurrency exchange API. This package allows d
 - Get order book depth information
 - Retrieve recent trades
 - Fetch historical klines (candlestick data)
+- Fetch open interest statistics
 - Easy-to-use and extend
 - Built-in HMAC signature generation for secure API requests
 
@@ -63,6 +64,10 @@ print("Funding Rate History:", funding_rate_history)
 klines = client.get_klines("BTC-USDT", interval="1h", limit=1000, start_time=1672531200000)
 print("Klines:", klines)
 
+# Fetch open interest statistics
+open_interest = client.get_open_interest("EOS-USDT")
+print("Open Interest:", open_interest)
+
 ```
 
 ## Project Structure
@@ -112,6 +117,11 @@ Fetch historical klines (candlestick data) for a specific trading pair.
     limit: The maximum number of klines to retrieve (default is 1000).
 
     start_time: The start time for the klines in milliseconds (optional).
+
+### `get_open_interest(symbol: str)`
+Fetch open interest statistics for a specific trading pair.
+
+    symbol: The trading pair symbol (e.g., "EOS-USDT").
 
 
 ## Contributing
