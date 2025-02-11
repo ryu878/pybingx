@@ -2,9 +2,15 @@ import time
 import requests
 import hmac
 from hashlib import sha256
-from utils import generate_signature, get_timestamp
 
 
+
+def generate_signature(secret_key, payload):
+    return hmac.new(secret_key.encode("utf-8"), payload.encode("utf-8"), sha256).hexdigest()
+
+ 
+def get_timestamp():
+    return str(int(time.time() * 1000))
 
 class BingXClient:
     API_URL = "https://open-api.bingx.com"
@@ -146,8 +152,8 @@ class BingXClient:
         path = '/openApi/swap/v3/user/balance'
         params = {}
         return self._send_request("GET", path, params)
-
-
+    
+    
     def _send_request(self, method: str, path: str, params: dict):
         params_str = self._parse_params(params)
         signature = generate_signature(self.secret_key, params_str)
