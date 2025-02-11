@@ -51,6 +51,11 @@ print("Recent Trades:", trades_info)
 # Fetch premium index
 premium_index = client.get_premium_index("BTC-USDT")
 print("Premium Index:", premium_index)
+
+# Fetch funding rates
+funding_rate = client.get_funding_rate("QNT-USDT", limit=2)
+print("Funding Rate:", funding_rate)
+
 ```
 
 ## Project Structure
@@ -82,6 +87,9 @@ Retrieve the most recent trades for a given trading pair.
 
 ### `get_premium_index(symbol: str)`
 Fetch the premium index for a specific trading pair.
+
+### `get_funding_rate(symbol: str, limit: int)`
+Retrieve the funding rates for a specific trading pair.
 
 ## Contributing
 

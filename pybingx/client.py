@@ -1,36 +1,65 @@
+import time
 import requests
 import hmac
 from hashlib import sha256
-from pybingx.utils import generate_signature, get_timestamp
 
 class BingXClient:
-    def __init__(self, api_key, secret_key):
-        self.api_url = "https://open-api.bingx.com"
+    API_URL = "https://open-api.bingx.com"
+
+    def __init__(self, api_key: str, secret_key: str):
         self.api_key = api_key
         self.secret_key = secret_key
 
-    def _send_request(self, path, method="GET", params=None):
-        if params is None:
-            params = {}
+    def get_contracts(self):
+        path = '/openApi/swap/v2/quote/contracts'
+        return self._send_request("GET", path, {})
 
-        params["timestamp"] = get_timestamp()
-        query_string = "&".join([f"{k}={v}" for k, v in sorted(params.items())])
-        signature = generate_signature(self.secret_key, query_string)
-        url = f"{self.api_url}{path}?{query_string}&signature={signature}"
+    def get_depth(self, symbol: str, limit: int = 5):
+        path = '/openApi/swap/v2/quote/depth'
+        params = {
+            "symbol": symbol,
+            "limit": limit
+        }
+        return self._send_request("GET", path, params)
 
-        headers = {"X-BX-APIKEY": self.api_key}
+    def get_trades(self, symbol: str, limit: int = 10):
+        path = '/openApi/swap/v2/quote/trades'
+        params = {
+            "symbol": symbol,
+            "limit": limit
+        }
+        return self._send_request("GET", path, params)
+
+    def get_premium_index(self, symbol: str):
+        path = '/openApi/swap/v2/quote/premiumIndex'
+        params = {
+            "symbol": symbol
+        }
+        return self._send_request("GET", path, params)
+
+    def get_funding_rate(self, symbol: str, limit: int = 2):
+        path = '/openApi/swap/v2/quote/fundingRate'
+        params = {
+            "symbol": symbol,
+            "limit": limit
+        }
+        return self._send_request("GET", path, params)
+
+    def _send_request(self, method: str, path: str, params: dict):
+        params_str = self._parse_params(params)
+        signature = self._get_sign(params_str)
+        url = f"{self.API_URL}{path}?{params_str}&signature={signature}"
+        headers = {
+            'X-BX-APIKEY': self.api_key,
+        }
         response = requests.request(method, url, headers=headers)
-
         return response.json()
 
-    def get_contracts(self):
-        return self._send_request("/openApi/swap/v2/quote/contracts")
+    def _get_sign(self, payload: str) -> str:
+        return hmac.new(self.secret_key.encode("utf-8"), payload.encode("utf-8"), digestmod=sha256).hexdigest()
 
-    def get_depth(self, symbol, limit=5):
-        return self._send_request("/openApi/swap/v2/quote/depth", params={"symbol": symbol, "limit": limit})
-
-    def get_trades(self, symbol, limit=10):
-        return self._send_request("/openApi/swap/v2/quote/trades", params={"symbol": symbol, "limit": limit})
-
-    def get_premium_index(self, symbol):
-        return self._send_request("/openApi/swap/v2/quote/premiumIndex", params={"symbol": symbol})
+    def _parse_params(self, params: dict) -> str:
+        sorted_keys = sorted(params)
+        params_str = "&".join([f"{key}={params[key]}" for key in sorted_keys])
+        timestamp = f"timestamp={int(time.time() * 1000)}"
+        return f"{params_str}&{timestamp}" if params_str else timestamp
