@@ -88,6 +88,15 @@ print("Order Book Ticker:", order_book_ticker)
 # Fetch mark price klines for a specific symbol and interval
 mark_price_klines = client.get_mark_price_klines("KNC-USDT", interval="1h", limit=1000, start_time=1702717199998)
 print("Mark Price Klines:", mark_price_klines)
+
+# Fetch price ticker for a specific symbol
+price_ticker = client.get_symbol_price_ticker("TIA-USDT")
+print("Symbol Price Ticker:", price_ticker)
+
+# Fetch price tickers for all symbols
+all_price_tickers = client.get_symbol_price_ticker()
+print("All Symbol Price Tickers:", all_price_tickers)
+
 ```
 
 ## Project Structure
@@ -168,6 +177,12 @@ Fetch mark price kline/candlestick data for a specific trading pair and interval
     interval: The interval of the klines (e.g., "1h", "4h", "1d").
     limit: The maximum number of klines to retrieve (default is 1000).
     start_time: The start time for the klines in milliseconds (optional, e.g. 1702717199998).
+
+### `get_symbol_price_ticker(symbol: str = None)`
+Fetch the price ticker for a specific trading pair or all pairs if no symbol is provided.
+
+    symbol: The trading pair symbol (e.g., "TIA-USDT"). If not provided, returns price tickers for all trading pairs.
+
 
 ## Contributing
 

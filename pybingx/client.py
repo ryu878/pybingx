@@ -133,3 +133,9 @@ class BingXClient:
         return self._send_request("GET", path, params)
 
 
+    def get_symbol_price_ticker(self, symbol: str = None) -> dict:
+        path = '/openApi/swap/v1/ticker/price'
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+        return self._send_request("GET", path, params)
