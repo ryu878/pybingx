@@ -14,6 +14,7 @@ A Python client for the BingX cryptocurrency exchange API. This package allows d
 - Retrieve information on users' positions of Perpetual Swap
 - Easy-to-use and extend
 - Built-in HMAC signature generation for secure API requests
+- Export fund flow as Excel file (3 month)
 
 ## Installation
 
