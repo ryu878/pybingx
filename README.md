@@ -366,8 +366,8 @@ Place multiple orders in a single request.
 ### `close_all_positions(symbol: str, recv_window: int = None)`
 Close all positions for a specific trading pair using a market order.
 
-- `symbol`: The trading pair symbol (e.g., "BTC-USDT").
-- `recv_window`: The receive window for the request (optional).
+    symbol: The trading pair symbol (e.g., "BTC-USDT").
+    recv_window: The receive window for the request (optional).
     
 ## Contributing
 
