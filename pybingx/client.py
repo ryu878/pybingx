@@ -323,6 +323,25 @@ class BingXClient:
         if recv_window:
             params["recvWindow"] = recv_window
         return self._send_request("DELETE", path, params)
+    
+
+    def cancel_batch_orders(self, symbol: str, order_id_list: list, recv_window: int = None) -> dict:
+        """
+        Cancel multiple orders in a single request.
+
+        :param symbol: The trading pair symbol (e.g., "BTC-USDT").
+        :param order_id_list: A list of order IDs to cancel.
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/batchOrders'
+        params = {
+            "symbol": symbol,
+            "orderIdList": json.dumps(order_id_list)
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("DELETE", path, params)
 
   
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):

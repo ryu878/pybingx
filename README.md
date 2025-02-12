@@ -216,6 +216,11 @@ The cancellation api is limited to one second and can only cancel the same order
 response = client.cancel_order(symbol="RNDR-USDT", order_id="1736011869418901234")
 print("Cancel Order Response:", response)
 
+# Cancel Multiple Orders
+order_ids = [1735924831603391122, 1735924833239172233]
+response = client.cancel_batch_orders(symbol="BTC-USDT", order_id_list=order_ids)
+print("Cancel Batch Orders Response:", response)
+
 ```
 
 ## Project Structure
@@ -384,6 +389,15 @@ Cancel an order that is currently in the "entrusted" state.
 
     symbol: The trading pair symbol (e.g., "RNDR-USDT").
     order_id: The ID of the order to cancel.
+    recv_window: The receive window for the request (optional).
+
+### `cancel_batch_orders(symbol: str, order_id_list: list, recv_window: int = None)`
+Cancel multiple orders in a single request. 
+
+Batch cancellation of some of the orders whose current account is in the current entrusted state.
+
+    symbol: The trading pair symbol (e.g., "BTC-USDT").
+    order_id_list: A list of order IDs to cancel.
     recv_window: The receive window for the request (optional).
     
 ## Contributing
