@@ -270,6 +270,23 @@ class BingXClient:
             params["recvWindow"] = recv_window
 
         return self._send_request("POST", path, params)
+    
+
+    def place_batch_orders(self, orders: list, recv_window: int = None) -> dict:
+        """
+        Place multiple orders in a single request.
+
+        :param orders: A list of order dictionaries.
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/batchOrders'
+        params = {
+            "batchOrders": json.dumps(orders)
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("POST", path, params)
 
   
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):

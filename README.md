@@ -183,6 +183,27 @@ order_response = client.place_order(
 )
 print("Order Response:", order_response)
 
+# Place Multiple Orders
+orders = [
+    {
+        "symbol": "ETH-USDT",
+        "type": "MARKET",
+        "side": "BUY",
+        "positionSide": "LONG",
+        "quantity": 1
+    },
+    {
+        "symbol": "BTC-USDT",
+        "type": "MARKET",
+        "side": "BUY",
+        "positionSide": "LONG",
+        "quantity": 0.001
+    }
+]
+
+response = client.place_batch_orders(orders)
+print("Batch Orders Response:", response)
+
 ```
 
 ## Project Structure
@@ -325,6 +346,17 @@ If the accuracy exceeds the range of the current period, the current API order w
     price_protect: Whether to enable price protection (default: False).
     callback_rate: The callback rate for trailing stop orders.
     recv_window: The receive window for the request (optional).
+
+### `place_batch_orders(orders: list, recv_window: int = None)`
+Place multiple orders in a single request.
+
+- `orders`: A list of order dictionaries. Each dictionary should contain:
+  - `symbol`: The trading pair symbol (e.g., "ETH-USDT").
+  - `type`: The order type (e.g., "MARKET", "LIMIT").
+  - `side`: The order side ("BUY" or "SELL").
+  - `positionSide`: The position side ("LONG" or "SHORT").
+  - `quantity`: The quantity of the order.
+- `recv_window`: The receive window for the request (optional).
     
 ## Contributing
 
