@@ -128,11 +128,18 @@ print("Fund flow data exported to fund_flow.xlsx")
 commission_rate = client.get_trading_commission_rate(recv_window=5000)
 print("Trading Commission Rate:", commission_rate)
 
-# Place a market order
+# Place order
 take_profit = {
     "type": "TAKE_PROFIT_MARKET",
-    "stopPrice": 31968.0,
-    "price": 31968.0,
+    "stopPrice": 32000.0,
+    "price": 32000.0,
+    "workingType": "MARK_PRICE"
+}
+
+stop_loss = {
+    "type": "STOP_MARKET",
+    "stopPrice": 31000.0,
+    "price": 31000.0,
     "workingType": "MARK_PRICE"
 }
 
@@ -141,8 +148,38 @@ order_response = client.place_order(
     side="BUY",
     position_side="LONG",
     order_type="MARKET",
-    quantity=5,
-    take_profit=take_profit
+    quantity=0.01,
+    take_profit=take_profit,
+    stop_loss=stop_loss,
+    stop_guaranteed=True,
+    working_type="MARK_PRICE",
+    reduce_only=False,
+    price_protect=True
+)
+print("Order Response:", order_response)
+
+# Place Limit Order with Reduce-Only
+order_response = client.place_order(
+    symbol="BTC-USDT",
+    side="SELL",
+    position_side="SHORT",
+    order_type="LIMIT",
+    quantity=0.01,
+    price=33000.0,
+    time_in_force="GTC",
+    reduce_only=True
+)
+print("Order Response:", order_response)
+
+# Trailing Stop Order
+order_response = client.place_order(
+    symbol="BTC-USDT",
+    side="BUY",
+    position_side="LONG",
+    order_type="TRAILING_STOP_MARKET",
+    quantity=0.01,
+    callback_rate=1.0,  # 1% trailing stop
+    working_type="MARK_PRICE"
 )
 print("Order Response:", order_response)
 
@@ -262,7 +299,7 @@ Fetch the trading commission rate for the current user.
 
     recv_window: The receive window for the request (optional).
 
-### `place_order(symbol: str, side: str, position_side: str, order_type: str, quantity: float, take_profit: dict = None, stop_loss: dict = None, recv_window: int = None)`
+### `place_order(symbol: str, side: str, position_side: str, order_type: str, quantity: float, price: float = None, time_in_force: str = None, stop_loss: dict = None, take_profit: dict = None, stop_guaranteed: bool = False, working_type: str = None, reduce_only: bool = False, price_protect: bool = False, callback_rate: float = None, recv_window: int = None)`
 Place an order on the BingX exchange.
 
 Trading Rules:
@@ -274,12 +311,19 @@ About price accuracy and quantity accuracy reference interface: https://open-api
 If the accuracy exceeds the range of the current period, the current API order will still be successful, but it will be truncated. For example, the price requirement is: 0.0001, if the order is 0.123456, it will be successfully submitted with 0.1234.
 
     symbol: The trading pair symbol (e.g., "BTC-USDT").
-    side: The order side (`BUY` or `SELL`).
-    position_side: The position side (`LONG` or `SHORT`).
-    order_type: The order type (e.g., `MARKET`, `LIMIT`).
+    side: The order side ("BUY" or "SELL").
+    position_side: The position side ("LONG" or "SHORT").
+    order_type: The order type (e.g., "MARKET", "LIMIT", "TRAILING_STOP_MARKET").
     quantity: The quantity of the order.
-    take_profit: A dictionary containing take profit parameters (optional).
-    stop_loss: A dictionary containing stop loss parameters (optional).
+    price: The price for limit orders (required for LIMIT orders).
+    time_in_force: How long the order remains active (e.g., "GTC", "IOC").
+    stop_loss: A dictionary containing stop-loss parameters.
+    take_profit: A dictionary containing take-profit parameters.
+    stop_guaranteed: Whether the stop-loss is guaranteed (default: False).
+    working_type: The working type for stop orders ("MARK_PRICE" or "CONTRACT_PRICE").
+    reduce_only: Whether the order is reduce-only (default: False).
+    price_protect: Whether to enable price protection (default: False).
+    callback_rate: The callback rate for trailing stop orders.
     recv_window: The receive window for the request (optional).
     
 ## Contributing
