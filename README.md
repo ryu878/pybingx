@@ -128,6 +128,24 @@ print("Fund flow data exported to fund_flow.xlsx")
 commission_rate = client.get_trading_commission_rate(recv_window=5000)
 print("Trading Commission Rate:", commission_rate)
 
+# Place a market order
+take_profit = {
+    "type": "TAKE_PROFIT_MARKET",
+    "stopPrice": 31968.0,
+    "price": 31968.0,
+    "workingType": "MARK_PRICE"
+}
+
+order_response = client.place_order(
+    symbol="BTC-USDT",
+    side="BUY",
+    position_side="LONG",
+    order_type="MARKET",
+    quantity=5,
+    take_profit=take_profit
+)
+print("Order Response:", order_response)
+
 ```
 
 ## Project Structure
@@ -242,6 +260,18 @@ Export the fund flow data as an Excel file, keeping only the last 3 months of da
 ### `get_trading_commission_rate(recv_window: int = None)`
 Fetch the trading commission rate for the current user.
 
+    recv_window: The receive window for the request (optional).
+
+### `place_order(symbol: str, side: str, position_side: str, order_type: str, quantity: float, take_profit: dict = None, stop_loss: dict = None, recv_window: int = None)`
+Place an order on the BingX exchange.
+
+    symbol: The trading pair symbol (e.g., "BTC-USDT").
+    side: The order side (`BUY` or `SELL`).
+    position_side: The position side (`LONG` or `SHORT`).
+    order_type: The order type (e.g., `MARKET`, `LIMIT`).
+    quantity: The quantity of the order.
+    take_profit: A dictionary containing take profit parameters (optional).
+    stop_loss: A dictionary containing stop loss parameters (optional).
     recv_window: The receive window for the request (optional).
     
 ## Contributing

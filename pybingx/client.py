@@ -2,6 +2,7 @@ import time
 import requests
 import hmac
 from hashlib import sha256
+import json
 
 
 
@@ -198,7 +199,35 @@ class BingXClient:
             params["recvWindow"] = recv_window
         return self._send_request("GET", path, params)
 
-    
+
+    def place_order(
+        self,
+        symbol: str,
+        side: str,
+        position_side: str,
+        order_type: str,
+        quantity: float,
+        take_profit: dict = None,
+        stop_loss: dict = None,
+        recv_window: int = None
+    ) -> dict:
+        path = '/openApi/swap/v2/trade/order'
+        params = {
+            "symbol": symbol,
+            "side": side,
+            "positionSide": position_side,
+            "type": order_type,
+            "quantity": quantity
+        }
+        if take_profit:
+            params["takeProfit"] = json.dumps(take_profit)
+        if stop_loss:
+            params["stopLoss"] = json.dumps(stop_loss)
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("POST", path, params)
+
+  
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
         params_str = self._parse_params(params)
         signature = generate_signature(self.secret_key, params_str)
@@ -206,10 +235,15 @@ class BingXClient:
         headers = {
             'X-BX-APIKEY': self.api_key,
         }
-        response = requests.request(method, url, headers=headers)
+        if method == "POST":
+            headers['Content-Type'] = 'application/json'
+            response = requests.request(method, url, headers=headers, json=params)
+        else:
+            response = requests.request(method, url, headers=headers)
         if return_binary:
             return response.content  # Return binary content for file downloads
         return response.json()
+
 
     def _parse_params(self, params: dict) -> str:
         sorted_keys = sorted(params)
