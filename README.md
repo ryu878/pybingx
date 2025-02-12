@@ -265,6 +265,12 @@ Fetch the trading commission rate for the current user.
 ### `place_order(symbol: str, side: str, position_side: str, order_type: str, quantity: float, take_profit: dict = None, stop_loss: dict = None, recv_window: int = None)`
 Place an order on the BingX exchange.
 
+Trading Rules:
+
+Trading Rules: https://bingx.com/en/tradeInfo/perpetual/trading-rules/BTC-USDT/
+About price accuracy and quantity accuracy reference interface: https://open-api.bingx.com/openApi/swap/v2/quote/contracts
+If the accuracy exceeds the range of the current period, the current API order will still be successful, but it will be truncated. For example, the price requirement is: 0.0001, if the order is 0.123456, it will be successfully submitted with 0.1234.
+
     symbol: The trading pair symbol (e.g., "BTC-USDT").
     side: The order side (`BUY` or `SELL`).
     position_side: The position side (`LONG` or `SHORT`).
