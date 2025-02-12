@@ -342,6 +342,26 @@ class BingXClient:
         if recv_window:
             params["recvWindow"] = recv_window
         return self._send_request("DELETE", path, params)
+    
+    
+    def cancel_all_open_orders(self, symbol: str, order_type: str = None, recv_window: int = None) -> dict:
+        """
+        Cancel all open orders for a specific trading pair.
+
+        :param symbol: The trading pair symbol (e.g., "ATOM-USDT").
+        :param order_type: The order type to cancel (e.g., "LIMIT"). If None, cancels all order types.
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/allOpenOrders'
+        params = {
+            "symbol": symbol
+        }
+        if order_type:
+            params["type"] = order_type
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("DELETE", path, params)
 
   
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):

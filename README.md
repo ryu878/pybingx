@@ -221,6 +221,14 @@ order_ids = [1735924831603391122, 1735924833239172233]
 response = client.cancel_batch_orders(symbol="BTC-USDT", order_id_list=order_ids)
 print("Cancel Batch Orders Response:", response)
 
+# Cancel All Open Orders for a Specific Symbol
+response = client.cancel_all_open_orders(symbol="ATOM-USDT")
+print("Cancel All Open Orders Response:", response)
+
+# Cancel All Open Limit Orders for a Specific Symbol
+response = client.cancel_all_open_orders(symbol="ATOM-USDT", order_type="LIMIT")
+print("Cancel All Open Limit Orders Response:", response)
+
 ```
 
 ## Project Structure
@@ -398,6 +406,13 @@ Batch cancellation of some of the orders whose current account is in the current
 
     symbol: The trading pair symbol (e.g., "BTC-USDT").
     order_id_list: A list of order IDs to cancel.
+    recv_window: The receive window for the request (optional).
+
+### `cancel_all_open_orders(symbol: str, order_type: str = None, recv_window: int = None)`
+Cancel all open orders for a specific trading pair.
+
+    symbol: The trading pair symbol (e.g., "ATOM-USDT").
+    order_type: The order type to cancel (e.g., "LIMIT"). If None, cancels all order types.
     recv_window: The receive window for the request (optional).
     
 ## Contributing
