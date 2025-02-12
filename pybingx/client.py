@@ -287,6 +287,23 @@ class BingXClient:
         if recv_window:
             params["recvWindow"] = recv_window
         return self._send_request("POST", path, params)
+    
+
+    def close_all_positions(self, symbol: str, recv_window: int = None) -> dict:
+        """
+        Close all positions for a specific trading pair using a market order.
+
+        :param symbol: The trading pair symbol (e.g., "BTC-USDT").
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/closeAllPositions'
+        params = {
+            "symbol": symbol
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("POST", path, params)
 
   
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
