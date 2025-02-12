@@ -208,6 +208,14 @@ print("Batch Orders Response:", response)
 response = client.close_all_positions(symbol="BTC-USDT")
 print("Close All Positions Response:", response)
 
+# Cancel Order
+Cancel an order that the current account is in the current entrusted state.
+
+The cancellation api is limited to one second and can only cancel the same orderId or clientOrderId. Please do not resubmit
+
+response = client.cancel_order(symbol="RNDR-USDT", order_id="1736011869418901234")
+print("Cancel Order Response:", response)
+
 ```
 
 ## Project Structure
@@ -369,6 +377,13 @@ Close all positions for a specific trading pair using a market order.
 One-click liquidation of all positions under the current account. Note that one-click liquidation is triggered by a market order.
 
     symbol: The trading pair symbol (e.g., "BTC-USDT").
+    recv_window: The receive window for the request (optional).
+
+### `cancel_order(symbol: str, order_id: str, recv_window: int = None)`
+Cancel an order that is currently in the "entrusted" state.
+
+    symbol: The trading pair symbol (e.g., "RNDR-USDT").
+    order_id: The ID of the order to cancel.
     recv_window: The receive window for the request (optional).
     
 ## Contributing

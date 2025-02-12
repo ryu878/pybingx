@@ -304,6 +304,25 @@ class BingXClient:
         if recv_window:
             params["recvWindow"] = recv_window
         return self._send_request("POST", path, params)
+    
+
+    def cancel_order(self, symbol: str, order_id: str, recv_window: int = None) -> dict:
+        """
+        Cancel an order that is currently in the "entrusted" state.
+
+        :param symbol: The trading pair symbol (e.g., "RNDR-USDT").
+        :param order_id: The ID of the order to cancel.
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/order'
+        params = {
+            "symbol": symbol,
+            "orderId": order_id
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("DELETE", path, params)
 
   
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
