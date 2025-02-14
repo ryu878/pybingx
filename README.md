@@ -229,6 +229,14 @@ print("Cancel All Open Orders Response:", response)
 response = client.cancel_all_open_orders(symbol="ATOM-USDT", order_type="LIMIT")
 print("Cancel All Open Limit Orders Response:", response)
 
+# Query All Open Orders for a Specific Symbol:
+response = client.get_all_open_orders(symbol="BTC-USDT")
+print("All Open Orders:", response)
+
+# Query All Open Limit Orders for a Specific Symbol:
+response = client.get_all_open_orders(symbol="BTC-USDT", order_type="LIMIT")
+print("All Open Limit Orders:", response)
+
 ```
 
 ## Project Structure
@@ -413,6 +421,13 @@ Cancel all open orders for a specific trading pair.
 
     symbol: The trading pair symbol (e.g., "ATOM-USDT").
     order_type: The order type to cancel (e.g., "LIMIT"). If None, cancels all order types.
+    recv_window: The receive window for the request (optional).
+
+### `get_all_open_orders(symbol: str, order_type: str = None, recv_window: int = None)`
+Query all open orders for a specific trading pair.
+
+    symbol: The trading pair symbol (e.g., "BTC-USDT").
+    order_type: The order type to filter by (e.g., "LIMIT"). If None, returns all order types.
     recv_window: The receive window for the request (optional).
     
 ## Contributing
