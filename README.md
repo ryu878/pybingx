@@ -18,7 +18,13 @@ A Python client for the BingX cryptocurrency exchange API. This package allows d
 
 ## Installation
 
-To install `pybingx`, first clone the repository and install it locally:
+To install `pybingx`, first clone the repository 
+
+```
+git clone git@github.com:ryu878/pybingx.git
+```
+and install it locally:
+
 
 ```bash
 pip install -e .
