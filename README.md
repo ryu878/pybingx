@@ -250,6 +250,11 @@ print("Pending Order Status:", response)
 # Query Order Details
 response = client.get_order_details(symbol="OP-USDT", order_id="1736012449498123456")
 print("Order Details:", response)
+
+# Query Margin Type
+response = client.get_margin_type(symbol="WOO-USDT")
+print("Margin Type:", response)
+
 ```
 
 ## Project Structure
@@ -455,6 +460,12 @@ Query the details of a specific order.
 
     symbol: The trading pair symbol (e.g., "OP-USDT").
     order_id: The ID of the order to query.
+    recv_window: The receive window for the request (optional).
+
+### `get_margin_type(symbol: str, recv_window: int = None)`
+Query the margin type (isolated or cross) for a specific trading pair.
+
+    symbol: The trading pair symbol (e.g., "WOO-USDT").
     recv_window: The receive window for the request (optional).
     
 ## Contributing

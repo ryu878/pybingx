@@ -421,6 +421,23 @@ class BingXClient:
             params["recvWindow"] = recv_window
         return self._send_request("GET", path, params)
 
+
+    def get_margin_type(self, symbol: str, recv_window: int = None) -> dict:
+        """
+        Query the margin type (isolated or cross) for a specific trading pair.
+
+        :param symbol: The trading pair symbol (e.g., "WOO-USDT").
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/marginType'
+        params = {
+            "symbol": symbol
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params)
+
   
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
         params_str = self._parse_params(params)
