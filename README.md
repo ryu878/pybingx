@@ -48,6 +48,9 @@ secret_key = "your_secret_key"
 
 client = BingXClient(api_key, secret_key)
 
+Market Data
+1. USDT-M Perp Futures symbols
+
 # Fetch contract details
 contracts = client.get_contracts()
 print("Contracts:", contracts)
@@ -543,7 +546,7 @@ Adjust the isolated margin funds for the positions in the isolated position mode
     position_side: The position side ("LONG" or "SHORT").
     recv_window: The receive window for the request (optional).
 
-    
+
 ## Contributing
 
 Feel free to submit issues or pull requests if you'd like to improve this package.
