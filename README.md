@@ -247,6 +247,9 @@ print("All Open Limit Orders:", response)
 response = client.get_pending_order_status(symbol="OP-USDT", order_id="1736012449498123456")
 print("Pending Order Status:", response)
 
+# Query Order Details
+response = client.get_order_details(symbol="OP-USDT", order_id="1736012449498123456")
+print("Order Details:", response)
 ```
 
 ## Project Structure
@@ -442,6 +445,13 @@ Query all open orders for a specific trading pair.
 
 ### `get_pending_order_status(symbol: str, order_id: str, recv_window: int = None)`
 Query the status of a specific pending order.
+
+    symbol: The trading pair symbol (e.g., "OP-USDT").
+    order_id: The ID of the order to query.
+    recv_window: The receive window for the request (optional).
+
+### `get_order_details(symbol: str, order_id: str, recv_window: int = None)`
+Query the details of a specific order.
 
     symbol: The trading pair symbol (e.g., "OP-USDT").
     order_id: The ID of the order to query.
