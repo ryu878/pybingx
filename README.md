@@ -255,6 +255,11 @@ print("Order Details:", response)
 response = client.get_margin_type(symbol="WOO-USDT")
 print("Margin Type:", response)
 
+# Change Margin Type
+response = client.change_margin_type("MINA-USDT", "CROSSED", recv_window=60000)
+print("Change Margin Type Response:", response)
+
+
 ```
 
 ## Project Structure
@@ -466,6 +471,13 @@ Query the details of a specific order.
 Query the margin type (isolated or cross) for a specific trading pair.
 
     symbol: The trading pair symbol (e.g., "WOO-USDT").
+    recv_window: The receive window for the request (optional).
+
+### `change_margin_type(symbol: str, margin_type: str, recv_window: int = None)`
+Change the user's margin mode on the specified symbol contract: isolated margin or cross margin.
+
+    symbol: The trading pair symbol (e.g., "MINA-USDT").
+    margin_type: The margin type to set ("ISOLATED" or "CROSSED").
     recv_window: The receive window for the request (optional).
     
 ## Contributing

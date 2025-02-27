@@ -438,7 +438,26 @@ class BingXClient:
             params["recvWindow"] = recv_window
         return self._send_request("GET", path, params)
 
-  
+    
+    def change_margin_type(self, symbol: str, margin_type: str, recv_window: int = None) -> dict:
+        """
+        Change the user's margin mode on the specified symbol contract: isolated margin or cross margin.
+
+        :param symbol: The trading pair symbol (e.g., "MINA-USDT").
+        :param margin_type: The margin type to set ("ISOLATED" or "CROSSED").
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/marginType'
+        params = {
+            "symbol": symbol,
+            "marginType": margin_type
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("POST", path, params)
+
+
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
         params_str = self._parse_params(params)
         signature = generate_signature(self.secret_key, params_str)
