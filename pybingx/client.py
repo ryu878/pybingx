@@ -549,6 +549,29 @@ class BingXClient:
         return self._send_request("GET", path, params)
 
 
+    def modify_isolated_position_margin(self, symbol: str, margin_type: int, amount: float, position_side: str, recv_window: int = None) -> dict:
+        """
+        Adjust the isolated margin funds for the positions in the isolated position mode.
+
+        :param symbol: The trading pair symbol (e.g., "BTC-USDT").
+        :param margin_type: The type of margin adjustment (1: Add margin, 2: Reduce margin).
+        :param amount: The amount of margin to adjust.
+        :param position_side: The position side ("LONG" or "SHORT").
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/positionMargin'
+        params = {
+            "symbol": symbol,
+            "type": margin_type,
+            "amount": amount,
+            "positionSide": position_side
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("POST", path, params)
+
+
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
         params_str = self._parse_params(params)
         signature = generate_signature(self.secret_key, params_str)

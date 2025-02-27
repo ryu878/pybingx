@@ -275,6 +275,9 @@ print("Force Orders:", force_orders)
 order_history = client.get_order_history("PYTH-USDT", start_time=1702688795000, end_time=1702731995000, limit=500)
 print("Order History:", order_history)
 
+# Modify Isolated Position Margin
+response = client.modify_isolated_position_margin("BTC-USDT", margin_type=1, amount=3, position_side="LONG", recv_window=10000)
+print("Modify Isolated Position Margin Response:", response)
 ```
 
 ## Project Structure
@@ -531,7 +534,16 @@ Key steps for using the API:
     limit: The maximum number of orders to retrieve (default is 500).
     recv_window: The receive window for the request (optional).
 
+### `modify_isolated_position_margin(symbol: str, margin_type: int, amount: float, position_side: str, recv_window: int = None)`
+Adjust the isolated margin funds for the positions in the isolated position mode.
 
+    symbol: The trading pair symbol (e.g., "BTC-USDT").
+    margin_type: The type of margin adjustment (1: Add margin, 2: Reduce margin).
+    amount: The amount of margin to adjust.
+    position_side: The position side ("LONG" or "SHORT").
+    recv_window: The receive window for the request (optional).
+
+    
 ## Contributing
 
 Feel free to submit issues or pull requests if you'd like to improve this package.
