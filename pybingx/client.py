@@ -383,6 +383,25 @@ class BingXClient:
             params["recvWindow"] = recv_window
         return self._send_request("GET", path, params)
 
+
+    def get_pending_order_status(self, symbol: str, order_id: str, recv_window: int = None) -> dict:
+        """
+        Query the status of a specific pending order.
+
+        :param symbol: The trading pair symbol (e.g., "OP-USDT").
+        :param order_id: The ID of the order to query.
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/openOrder'
+        params = {
+            "symbol": symbol,
+            "orderId": order_id
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params)
+
   
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
         params_str = self._parse_params(params)

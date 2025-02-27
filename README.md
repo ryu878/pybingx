@@ -243,6 +243,10 @@ print("All Open Orders:", response)
 response = client.get_all_open_orders(symbol="BTC-USDT", order_type="LIMIT")
 print("All Open Limit Orders:", response)
 
+# Query Pending Order Status
+response = client.get_pending_order_status(symbol="OP-USDT", order_id="1736012449498123456")
+print("Pending Order Status:", response)
+
 ```
 
 ## Project Structure
@@ -434,6 +438,13 @@ Query all open orders for a specific trading pair.
 
     symbol: The trading pair symbol (e.g., "BTC-USDT").
     order_type: The order type to filter by (e.g., "LIMIT"). If None, returns all order types.
+    recv_window: The receive window for the request (optional).
+
+### `get_pending_order_status(symbol: str, order_id: str, recv_window: int = None)`
+Query the status of a specific pending order.
+
+    symbol: The trading pair symbol (e.g., "OP-USDT").
+    order_id: The ID of the order to query.
     recv_window: The receive window for the request (optional).
     
 ## Contributing
