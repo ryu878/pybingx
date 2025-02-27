@@ -266,6 +266,15 @@ print("Leverage and Available Positions:", leverage_and_positions)
 # Set Leverage
 response = client.set_leverage("ETH-USDT", leverage=8, side="SHORT")
 print("Set Leverage Response:", response)
+
+# User's Force Orders
+force_orders = client.get_force_orders("ATOM-USDT", start_time=1696291200000)
+print("Force Orders:", force_orders)
+
+# Query Order History
+order_history = client.get_order_history("PYTH-USDT", start_time=1702688795000, end_time=1702731995000, limit=500)
+print("Order History:", order_history)
+
 ```
 
 ## Project Structure
@@ -500,7 +509,29 @@ Adjust the user's opening leverage in the specified symbol contract.
     side: The position side ("LONG" or "SHORT").
     recv_window: The receive window for the request (optional).
 
-    
+### `get_force_orders(symbol: str, start_time: int = None, end_time: int = None, recv_window: int = None)`
+Query the user's forced liquidation orders.
+
+    symbol: The trading pair symbol (e.g., "ATOM-USDT").
+    start_time: The start time for the query in milliseconds (optional).
+    end_time: The end time for the query in milliseconds (optional).
+    recv_window: The receive window for the request (optional).
+
+### `get_order_history(symbol: str, start_time: int = None, end_time: int = None, limit: int = 500, recv_window: int = None)`
+Query the user's historical orders (order status is completed or canceled).
+
+Key steps for using the API:
+- The maximum query time range shall not exceed 7 days.
+- Query data within the last 7 days by default.
+- Return order list sorted by updateTime from smallest to largest.
+
+    symbol: The trading pair symbol (e.g., "PYTH-USDT").
+    start_time: The start time for the query in milliseconds (optional).
+    end_time: The end time for the query in milliseconds (optional).
+    limit: The maximum number of orders to retrieve (default is 500).
+    recv_window: The receive window for the request (optional).
+
+
 ## Contributing
 
 Feel free to submit issues or pull requests if you'd like to improve this package.

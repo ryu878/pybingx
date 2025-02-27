@@ -496,6 +496,59 @@ class BingXClient:
         return self._send_request("POST", path, params)
 
 
+    def get_force_orders(self, symbol: str, start_time: int = None, end_time: int = None, recv_window: int = None) -> dict:
+        """
+        Query the user's forced liquidation orders.
+
+        :param symbol: The trading pair symbol (e.g., "ATOM-USDT").
+        :param start_time: The start time for the query in milliseconds (optional).
+        :param end_time: The end time for the query in milliseconds (optional).
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/forceOrders'
+        params = {
+            "symbol": symbol
+        }
+        if start_time:
+            params["startTime"] = start_time
+        if end_time:
+            params["endTime"] = end_time
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params)
+
+
+    def get_order_history(self, symbol: str, start_time: int = None, end_time: int = None, limit: int = 500, recv_window: int = None) -> dict:
+        """
+        Query the user's historical orders (order status is completed or canceled).
+
+        Key steps for using the API:
+        - The maximum query time range shall not exceed 7 days.
+        - Query data within the last 7 days by default.
+        - Return order list sorted by updateTime from smallest to largest.
+
+        :param symbol: The trading pair symbol (e.g., "PYTH-USDT").
+        :param start_time: The start time for the query in milliseconds (optional).
+        :param end_time: The end time for the query in milliseconds (optional).
+        :param limit: The maximum number of orders to retrieve (default is 500).
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/allOrders'
+        params = {
+            "symbol": symbol,
+            "limit": limit
+        }
+        if start_time:
+            params["startTime"] = start_time
+        if end_time:
+            params["endTime"] = end_time
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params)
+
+
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
         params_str = self._parse_params(params)
         signature = generate_signature(self.secret_key, params_str)
