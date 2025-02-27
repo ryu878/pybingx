@@ -122,10 +122,12 @@ print("All Symbol Price Tickers:", all_price_tickers)
 
 Account Endpoints
 
+# 1. Query account data
 # Fetch user balance
 user_balance = client.get_user_balance()
 print("User Balance:", user_balance)
 
+# 2. Query position data
 # Fetch positions for a specific symbol
 positions = client.get_positions(symbol="BNB-USDT")
 print("Positions:", positions)
@@ -134,10 +136,12 @@ print("Positions:", positions)
 all_positions = client.get_positions()
 print("All Positions:", all_positions)
 
+# 3. Get Account Profit and Loss Fund Flow
 # Fetch profit and loss fund flow with a time range
 profit_loss_flow = client.get_account_profit_loss_flow(start_time=1702713615001, end_time=1702731787011, limit=1000)
 print("Profit and Loss Fund Flow:", profit_loss_flow)
 
+# 4. Export fund flow
 # Export fund flow data for a specific symbol
 fund_flow_data = client.export_fund_flow(symbol="BTC-USDT", start_time=1702449874964, limit=200)
 
@@ -146,10 +150,33 @@ with open("fund_flow.xlsx", "wb") as file:
     file.write(fund_flow_data)
 print("Fund flow data exported to fund_flow.xlsx")
 
+# 5. Query Trading Commission Rate
 # Fetch trading commission rate
 commission_rate = client.get_trading_commission_rate(recv_window=5000)
 print("Trading Commission Rate:", commission_rate)
 
+Trades Endpoints
+# 1. Test Order
+# Test Order
+
+take_profit = {
+    "type": "TAKE_PROFIT_MARKET",
+    "stopPrice": 31968.0,
+    "price": 31968.0,
+    "workingType": "MARK_PRICE"
+}
+
+response = client.test_order(
+    symbol="BTC-USDT",
+    side="BUY",
+    position_side="LONG",
+    order_type="MARKET",
+    quantity=5,
+    take_profit=take_profit
+)
+print("Test Order Response:", response)
+
+# 2. Place order
 # Place order
 take_profit = {
     "type": "TAKE_PROFIT_MARKET",

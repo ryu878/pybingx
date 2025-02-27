@@ -200,24 +200,96 @@ class BingXClient:
         return self._send_request("GET", path, params)
 
 
-    def place_order(
-    self,
-    symbol: str,
-    side: str,
-    position_side: str,
-    order_type: str,
-    quantity: float,
-    price: float = None,
-    time_in_force: str = None,
-    stop_loss: dict = None,
-    take_profit: dict = None,
-    stop_guaranteed: bool = False,
-    working_type: str = None,
-    reduce_only: bool = False,
-    price_protect: bool = False,
-    callback_rate: float = None,
-    recv_window: int = None
+    def test_order(
+        self,
+        symbol: str,
+        side: str,
+        position_side: str,
+        order_type: str,
+        quantity: float,
+        price: float = None,
+        time_in_force: str = None,
+        stop_loss: dict = None,
+        take_profit: dict = None,
+        stop_guaranteed: bool = False,
+        working_type: str = None,
+        reduce_only: bool = False,
+        price_protect: bool = False,
+        callback_rate: float = None,
+        recv_window: int = None
     ) -> dict:
+        """
+        Test placing an order without actually executing it.
+
+        :param symbol: The trading pair symbol (e.g., "BTC-USDT").
+        :param side: The order side ("BUY" or "SELL").
+        :param position_side: The position side ("LONG" or "SHORT").
+        :param order_type: The order type (e.g., "MARKET", "LIMIT").
+        :param quantity: The quantity of the order.
+        :param price: The price for limit orders (required for LIMIT orders).
+        :param time_in_force: How long the order remains active (e.g., "GTC", "IOC").
+        :param stop_loss: A dictionary containing stop-loss parameters.
+        :param take_profit: A dictionary containing take-profit parameters.
+        :param stop_guaranteed: Whether the stop-loss is guaranteed (default: False).
+        :param working_type: The working type for stop orders ("MARK_PRICE" or "CONTRACT_PRICE").
+        :param reduce_only: Whether the order is reduce-only (default: False).
+        :param price_protect: Whether to enable price protection (default: False).
+        :param callback_rate: The callback rate for trailing stop orders.
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/order/test'
+        params = {
+            "symbol": symbol,
+            "side": side,
+            "positionSide": position_side,
+            "type": order_type,
+            "quantity": quantity
+        }
+
+        # Add optional parameters
+        if price:
+            params["price"] = price
+        if time_in_force:
+            params["timeInForce"] = time_in_force
+        if stop_loss:
+            params["stopLoss"] = json.dumps(stop_loss)
+        if take_profit:
+            params["takeProfit"] = json.dumps(take_profit)
+        if stop_guaranteed:
+            params["stopGuaranteed"] = "true"
+        if working_type:
+            params["workingType"] = working_type
+        if reduce_only:
+            params["reduceOnly"] = "true"
+        if price_protect:
+            params["priceProtect"] = "true"
+        if callback_rate:
+            params["callbackRate"] = callback_rate
+        if recv_window:
+            params["recvWindow"] = recv_window
+
+        return self._send_request("POST", path, params)
+
+
+    def place_order(
+        self,
+        symbol: str,
+        side: str,
+        position_side: str,
+        order_type: str,
+        quantity: float,
+        price: float = None,
+        time_in_force: str = None,
+        stop_loss: dict = None,
+        take_profit: dict = None,
+        stop_guaranteed: bool = False,
+        working_type: str = None,
+        reduce_only: bool = False,
+        price_protect: bool = False,
+        callback_rate: float = None,
+        recv_window: int = None
+        ) -> dict:
         """
         Place an order on the BingX exchange.
 
