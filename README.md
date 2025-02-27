@@ -50,7 +50,6 @@ client = BingXClient(api_key, secret_key)
 
 Market Data
 
-
 # 1. USDT-M Perp Futures symbols. Fetch contract details
 contracts = client.get_contracts()
 print("Contracts:", contracts)
