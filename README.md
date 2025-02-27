@@ -50,37 +50,45 @@ client = BingXClient(api_key, secret_key)
 
 Market Data
 
-# 1. USDT-M Perp Futures symbols. Fetch contract details
+# 1. USDT-M Perp Futures symbols. 
+# Fetch contract details
 contracts = client.get_contracts()
 print("Contracts:", contracts)
 
-# 2. Order Book. Fetch depth information
+# 2. Order Book. 
+# Fetch depth information
 depth_info = client.get_depth("SHIB-USDT", limit=5)
 print("Depth Info:", depth_info)
 
-# 3. Recent Trades List. Fetch recent trades
+# 3. Recent Trades List. 
+# Fetch recent trades
 trades_info = client.get_trades("BTC-USDT", limit=10)
 print("Recent Trades:", trades_info)
 
-# 4. Mark Price and Funding Rate. Fetch premium index
+# 4. Mark Price and Funding Rate. 
+# Fetch premium index
 premium_index = client.get_premium_index("BTC-USDT")
 print("Premium Index:", premium_index)
 
-# 5. Get Funding Rate History. Fetch funding rate history with time range
+# 5. Get Funding Rate History. 
+# Fetch funding rate history with time range
 start_time = 1672531200000  # Example timestamp in milliseconds
 end_time = 1672617600000    # Example timestamp in milliseconds
 funding_rate_history = client.get_funding_rate_history("BTC-USDT", start_time=start_time, end_time=end_time, limit=5)
 print("Funding Rate History:", funding_rate_history)
 
-# 6. Kline/Candlestick Data. Fetch historical klines (candlestick data)
+# 6. Kline/Candlestick Data. 
+# Fetch historical klines (candlestick data)
 klines = client.get_klines("BTC-USDT", interval="1h", limit=1000, start_time=1672531200000)
 print("Klines:", klines)
 
-# 7. Open Interest Statistics. Fetch open interest statistics
+# 7. Open Interest Statistics. 
+# Fetch open interest statistics
 open_interest = client.get_open_interest("EOS-USDT")
 print("Open Interest:", open_interest)
 
-# 8. 24hr Ticker Price Change Statistics. Fetch 24hr ticker price change for a specific symbol
+# 8. 24hr Ticker Price Change Statistics. 
+# Fetch 24hr ticker price change for a specific symbol
 ticker_price_change = client.get_24hr_ticker_price_change("SFP-USDT")
 print("24hr Ticker Price Change (SFP-USDT):", ticker_price_change)
 
@@ -88,19 +96,23 @@ print("24hr Ticker Price Change (SFP-USDT):", ticker_price_change)
 all_ticker_price_changes = client.get_24hr_ticker_price_change()
 print("24hr Ticker Price Change (All Symbols):", all_ticker_price_changes)
 
-# 9. Query historical transaction orders. Fetch historical trades for a specific symbol
+# 9. Query historical transaction orders. 
+# Fetch historical trades for a specific symbol
 historical_trades = client.get_historical_trades("ETH-USDT", from_id="412551", limit=500)
 print("Historical Trades:", historical_trades)
 
-# 10. Symbol Order Book Ticker. Fetch order book ticker for a specific symbol
+# 10. Symbol Order Book Ticker. 
+# Fetch order book ticker for a specific symbol
 order_book_ticker = client.get_symbol_order_book_ticker("BTC-USDT")
 print("Order Book Ticker:", order_book_ticker)
 
-# 11. Mark Price Kline/Candlestick Data. Fetch mark price klines for a specific symbol and interval
+# 11. Mark Price Kline/Candlestick Data. 
+# Fetch mark price klines for a specific symbol and interval
 mark_price_klines = client.get_mark_price_klines("KNC-USDT", interval="1h", limit=1000, start_time=1702717199998)
 print("Mark Price Klines:", mark_price_klines)
 
-# 12. Symbol Price Ticker. Fetch price ticker for a specific symbol
+# 12. Symbol Price Ticker. 
+# Fetch price ticker for a specific symbol
 price_ticker = client.get_symbol_price_ticker("TIA-USDT")
 print("Symbol Price Ticker:", price_ticker)
 
