@@ -458,6 +458,44 @@ class BingXClient:
         return self._send_request("POST", path, params)
 
 
+    def get_leverage_and_positions(self, symbol: str, recv_window: int = None) -> dict:
+        """
+        Query the opening leverage and available positions of the user in the specified symbol contract.
+
+        :param symbol: The trading pair symbol (e.g., "BCH-USDT").
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/leverage'
+        params = {
+            "symbol": symbol
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("GET", path, params)
+
+
+    def set_leverage(self, symbol: str, leverage: int, side: str, recv_window: int = None) -> dict:
+        """
+        Adjust the user's opening leverage in the specified symbol contract.
+
+        :param symbol: The trading pair symbol (e.g., "ETH-USDT").
+        :param leverage: The leverage value to set (e.g., 8).
+        :param side: The position side ("LONG" or "SHORT").
+        :param recv_window: The receive window for the request (optional).
+        :return: The response from the API.
+        """
+        path = '/openApi/swap/v2/trade/leverage'
+        params = {
+            "symbol": symbol,
+            "leverage": leverage,
+            "side": side
+        }
+        if recv_window:
+            params["recvWindow"] = recv_window
+        return self._send_request("POST", path, params)
+
+
     def _send_request(self, method: str, path: str, params: dict, return_binary: bool = False):
         params_str = self._parse_params(params)
         signature = generate_signature(self.secret_key, params_str)

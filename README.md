@@ -259,7 +259,13 @@ print("Margin Type:", response)
 response = client.change_margin_type("MINA-USDT", "CROSSED", recv_window=60000)
 print("Change Margin Type Response:", response)
 
+# Query Leverage and Available Positions
+leverage_and_positions = client.get_leverage_and_positions("BCH-USDT")
+print("Leverage and Available Positions:", leverage_and_positions)
 
+# Set Leverage
+response = client.set_leverage("ETH-USDT", leverage=8, side="SHORT")
+print("Set Leverage Response:", response)
 ```
 
 ## Project Structure
@@ -479,6 +485,21 @@ Change the user's margin mode on the specified symbol contract: isolated margin 
     symbol: The trading pair symbol (e.g., "MINA-USDT").
     margin_type: The margin type to set ("ISOLATED" or "CROSSED").
     recv_window: The receive window for the request (optional).
+
+### `get_leverage_and_positions(symbol: str, recv_window: int = None)`
+Query the opening leverage and available positions of the user in the specified symbol contract.
+
+    symbol: The trading pair symbol (e.g., "BCH-USDT").
+    recv_window: The receive window for the request (optional).
+
+### `set_leverage(symbol: str, leverage: int, side: str, recv_window: int = None)`
+Adjust the user's opening leverage in the specified symbol contract.
+
+    symbol: The trading pair symbol (e.g., "ETH-USDT").
+    leverage: The leverage value to set (e.g., 8).
+    side: The position side ("LONG" or "SHORT").
+    recv_window: The receive window for the request (optional).
+
     
 ## Contributing
 
