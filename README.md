@@ -322,22 +322,6 @@ print("Order History:", order_history)
 response = client.modify_isolated_position_margin("BTC-USDT", margin_type=1, amount=3, position_side="LONG", recv_window=10000)
 print("Modify Isolated Position Margin Response:", response)
 
-take_profit = {
-    "type": "TAKE_PROFIT_MARKET",
-    "stopPrice": 31968.0,
-    "price": 31968.0,
-    "workingType": "MARK_PRICE"
-}
-
-response = client.test_order(
-    symbol="BTC-USDT",
-    side="BUY",
-    position_side="LONG",
-    order_type="MARKET",
-    quantity=5,
-    take_profit=take_profit
-)
-print("Test Order Response:", response)
 ```
 
 ## Project Structure
@@ -603,25 +587,7 @@ Adjust the isolated margin funds for the positions in the isolated position mode
     position_side: The position side ("LONG" or "SHORT").
     recv_window: The receive window for the request (optional).
 
-### `test_order(symbol: str, side: str, position_side: str, order_type: str, quantity: float, price: float = None, time_in_force: str = None, stop_loss: dict = None, take_profit: dict = None, stop_guaranteed: bool = False, working_type: str = None, reduce_only: bool = False, price_protect: bool = False, callback_rate: float = None, recv_window: int = None)`
-Test placing an order without actually executing it.
 
-    symbol: The trading pair symbol (e.g., "BTC-USDT").
-    side: The order side ("BUY" or "SELL").
-    position_side: The position side ("LONG" or "SHORT").
-    order_type: The order type (e.g., "MARKET", "LIMIT").
-    quantity: The quantity of the order.
-    price: The price for limit orders (required for LIMIT orders).
-    time_in_force: How long the order remains active (e.g., "GTC", "IOC").
-    stop_loss: A dictionary containing stop-loss parameters.
-    take_profit: A dictionary containing take-profit parameters.
-    stop_guaranteed: Whether the stop-loss is guaranteed (default: False).
-    working_type: The working type for stop orders ("MARK_PRICE" or "CONTRACT_PRICE").
-    reduce_only: Whether the order is reduce-only (default: False).
-    price_protect: Whether to enable price protection (default: False).
-    callback_rate: The callback rate for trailing stop orders.
-    recv_window: The receive window for the request (optional).
-    
 ## Contributing
 
 Feel free to submit issues or pull requests if you'd like to improve this package.
